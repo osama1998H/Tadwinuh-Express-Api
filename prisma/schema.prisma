@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String   @unique
+  password  String // You should hash passwords and validate them separately
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Currency {
+  id               Int      @id @default(autoincrement())
+  name             String   @unique
+  exchange_rate    Float? @default(1)
+  selling_rate     Float?
+  buying_rate      Float?
+  min_selling_rate Float?
+  max_buying_rate  Float?
+  currency_symbol  String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model Country {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  flag      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Nationality {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Province {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Destination {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id                 Int       @id @default(autoincrement())
+  type               String?
+  name               String?
+  account_number     Int       @unique
+  currency           String?
+  balance            Float?
+  is_group           Boolean?  @default(false)
+  parent_account_id  Int?
+  is_frozen          Boolean?  @default(false)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  // parentAccount      Account?  @relation("ChildAccounts", fields: [parent_account_id], references: [id])
+  sub_accounts       SubAccount[]
+}
+
+model Sender {
+  id            Int       @id @default(autoincrement())
+  full_name     String
+  nationality   String?
+  country       String?
+  phone_number  String?
+  dob           DateTime?
+  id_type       String?
+  id_number     String?
+  date_of_issue DateTime?
+  address       String
+  city          String?
+  province      String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model GlEntry {
+  id                                Int       @id @default(autoincrement())
+  posting_date                      DateTime? @default(now())
+  transaction_date                  DateTime?
+  due_date                          DateTime?
+  account                           String
+  debit_amount                      Float   @default(0)
+  credit_amount                     Float   @default(0)
+  account_currency                  String
+  debit_amount_in_account_currency  Float   @default(0)
+  credit_amount_in_account_currency Float   @default(0)
+  voucher_type                      String?
+  voucher_number                    String?
+  remarks                           String?
+  is_opening                        Boolean   @default(false)
+  is_cancelled                      Boolean   @default(false)
+  createdAt                         DateTime  @default(now())
+  updatedAt                         DateTime  @updatedAt
+}
+
+model RemittanceCommissionRate {
+  id                             Int       @id @default(autoincrement())
+  posting_date                   DateTime? @default(now())
+  customer_name                  String
+  currency                       String
+  outgoing_commission_percentage Float   @default(0)
+  outgoing_commission_on_every   Float   @default(0)
+  outgoing_commission_amount     Float   @default(0)
+  incoming_commission_percentage Float   @default(0)
+  incoming_commission_on_every   Float   @default(0)
+  incoming_commission_amount     Float   @default(0)
+  createdAt                      DateTime  @default(now())
+  updatedAt                      DateTime  @updatedAt
+
+  @@unique([customer_name, currency], name: "UniqueCustomerCurrency")
+}
+
+model SubAccount {
+  id                  Int      @id @default(autoincrement())
+  type                String
+  account_name        String
+  account_id          Int @unique
+  mobile_number       String?
+  email               String?
+  address             String?
+  credit_limit        Float?
+  note                String?
+  discount_percentage Float?
+  is_frozen           Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+
+  account Account @relation(fields: [account_id], references: [id])
+  @@unique([account_name, account_id], name: "UniqueAccountNameAccountId")
+}
