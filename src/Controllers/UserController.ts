@@ -3,11 +3,18 @@ import { User } from "../Models/UserModel";
 import { db } from "../utils/db.server";
 import { body, ValidationChain } from "express-validator";
 
-
 class UserController extends BaseController {
   constructor() {
     super("User");
   }
+
+  /************************************************************
+   *
+   *   Don T Forget To Write Your Own Validations
+   *
+   *   [validateStoreRequest, validateUpdateRequest]
+   *
+   ************************************************************/
 
   validateStoreRequest(): ValidationChain[] {
     return [
@@ -22,8 +29,14 @@ class UserController extends BaseController {
 
   validateUpdateRequest(): ValidationChain[] {
     return [
-      body("firstName").optional().notEmpty().withMessage("First name is required"),
-      body("lastName").optional().notEmpty().withMessage("Last name is required"),
+      body("firstName")
+        .optional()
+        .notEmpty()
+        .withMessage("First name is required"),
+      body("lastName")
+        .optional()
+        .notEmpty()
+        .withMessage("Last name is required"),
       body("email").optional().isEmail().withMessage("Invalid email format"),
       body("password")
         .optional()
@@ -31,6 +44,14 @@ class UserController extends BaseController {
         .withMessage("Password must be at least 6 characters long"),
     ];
   }
+
+  /************************************************************
+   *
+   *   Here You Can Override The Basic Crud Logic
+   *
+   *   [index, show, store, update, delete]
+   *
+   ************************************************************/
 
   override async index(): Promise<User[]> {
     return db.user.findMany();
@@ -80,4 +101,5 @@ class UserController extends BaseController {
   }
 }
 
+/*==== Do Not Delete The Controller Exportation ===================================*/
 export default UserController;
