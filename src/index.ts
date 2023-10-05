@@ -2,8 +2,16 @@ import * as dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 
-import UserController from "./Controllers/UserController";
+/*=============================================================*/
+/*==== Controller Imports Start ===============================*/
+/*=============================================================*/
 
+import UserController from "./Controllers/UserController";
+import CountryController from "./Controllers/CountryController";
+
+/*=============================================================*/
+/*==== Controller Imports End =================================*/
+/*=============================================================*/
 
 dotenv.config();
 
@@ -14,13 +22,31 @@ if (!process.env.PORT) {
 const PORT: number = parseInt(process.env.PORT as string, 10);
 
 const app = express();
-
-const userController = new UserController();
-
 app.use(cors());
 app.use(express.json());
-app.use("/api/v2/users/", userController.router);
 
+/*=============================================================*/
+/*==== Controller Instance Start ==============================*/
+/*=============================================================*/
+
+const userPaths = new UserController();
+const countryPaths = new CountryController();
+
+/*=============================================================*/
+/*==== Controller Instance End ================================*/
+/*=============================================================*/
+
+/*=============================================================*/
+/*==== Routes Endpoints Start =================================*/
+/*=============================================================*/
+
+app.use("/api/users/", userPaths.router);
+app.use("/api/countries/", countryPaths.router);
+
+
+/*=============================================================*/
+/*==== Routes Endpoints End ===================================*/
+/*=============================================================*/
 
 let server: any; // Declare the 'server' variable
 

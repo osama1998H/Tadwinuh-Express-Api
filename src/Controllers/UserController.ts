@@ -1,5 +1,5 @@
 import BaseController from "./BaseController";
-import { User } from "../Models/UserModel";
+import { User, UserStoreRequest, UserUpdateRequest } from "../Models/UserModel";
 import { db } from "../utils/db.server";
 import { body, ValidationChain } from "express-validator";
 
@@ -10,40 +10,21 @@ class UserController extends BaseController {
 
   /************************************************************
    *
-   *   Don T Forget To Write Your Own Validations
+   *   Don'T Forget To Write Your Own Validations
    *
    *   [validateStoreRequest, validateUpdateRequest]
    *
    ************************************************************/
 
   validateStoreRequest(): ValidationChain[] {
-    return [
-      body("firstName").notEmpty().withMessage("First name is required"),
-      body("lastName").notEmpty().withMessage("Last name is required"),
-      body("email").isEmail().withMessage("Invalid email format"),
-      body("password")
-        .isLength({ min: 6 })
-        .withMessage("Password must be at least 6 characters long"),
-    ];
+    return UserStoreRequest
   }
 
   validateUpdateRequest(): ValidationChain[] {
-    return [
-      body("firstName")
-        .optional()
-        .notEmpty()
-        .withMessage("First name is required"),
-      body("lastName")
-        .optional()
-        .notEmpty()
-        .withMessage("Last name is required"),
-      body("email").optional().isEmail().withMessage("Invalid email format"),
-      body("password")
-        .optional()
-        .isLength({ min: 6 })
-        .withMessage("Password must be at least 6 characters long"),
-    ];
+    return UserUpdateRequest
   }
+
+
 
   /************************************************************
    *
