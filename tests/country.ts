@@ -3,12 +3,12 @@ import app from "../src/index";
 import CountryController from "../src/Controllers/CountryController";
 import { db } from "../src/utils/db.server";
 
-describe("index", () => {});
+// describe("index", () => {});
 
-describe("show", () => {});
+// describe("show", () => {});
 
-describe("store", () => {});
+// describe("store", () => {});
 
-describe("update", () => {});
+// describe("update", () => {});
 
-describe("delete", () => {});
+// describe("delete", () => {});
