@@ -88,20 +88,46 @@ export const {class_name}UpdateRequest: ValidationChain[] = [
 
 
 """
+    
+    test_content = f"""
+import request from "supertest";
+import app from "../src/index";
+import {class_name}Controller from "../src/Controllers/{class_name}Controller";
+import {{ db }} from "../src/utils/db.server";
+
+describe("index", () => {{}});
+
+describe("show", () => {{}});
+
+describe("store", () => {{}});
+
+describe("update", () => {{}});
+
+describe("delete", () => {{}});
+
+"""
 
     # Define the file paths
     controller_file_path = f"src/Controllers/{class_name}Controller.ts"
     model_file_path = f"src/Models/{class_name}Model.ts"
+    test_file_path = f"tests/{class_name.lower()}.test.ts"
 
     # Create the controller file
     with open(controller_file_path, "w") as controller_file:
         controller_file.write(controller_content)
+        print(f"Generated {class_name}Controller.ts")
 
     # Create the model file
     with open(model_file_path, "w") as model_file:
         model_file.write(model_content)
+        print(f"Generated {class_name}Model.ts")
 
-    print(f"Generated {class_name}Controller.ts and {class_name}Model.ts")
+    # Create the test file
+    with open(test_file_path, "w") as test_file:
+        test_file.write(test_content)
+        print(f"Generated {class_name.lower()}.test.ts")
+
+    print("Generation Completed")
 
 if __name__ == "__main__":
     class_name = input("Enter the name of the model (e.g., Post): ").strip()
