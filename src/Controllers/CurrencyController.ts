@@ -1,8 +1,12 @@
-
 import BaseController from "./BaseController";
 import { ValidationChain } from "express-validator";
 import { db } from "../utils/db.server";
-import { Currency, CurrencyStoreRequest, CurrencyUpdateRequest } from "../Models/CurrencyModel";
+import {
+  CurrencyCreate,
+  CurrencyUpdate,
+  CurrencyStoreRequest,
+  CurrencyUpdateRequest,
+} from "../Models/CurrencyModel";
 
 class CurrencyController extends BaseController {
   constructor() {
@@ -18,11 +22,11 @@ class CurrencyController extends BaseController {
   ==================================================*/
 
   validateStoreRequest(): ValidationChain[] {
-    return CurrencyStoreRequest
+    return CurrencyStoreRequest;
   }
 
   validateUpdateRequest(): ValidationChain[] {
-    return CurrencyUpdateRequest
+    return CurrencyUpdateRequest;
   }
 
   /*==============================================
@@ -33,24 +37,71 @@ class CurrencyController extends BaseController {
   *
   ===============================================*/
 
-  override async index(): Promise<Currency[]> {
-    // Implement your index method here
+  override async index(): Promise<CurrencyCreate[]> {
+    return db.currency.findMany();
   }
 
-  override async show(id: number): Promise<Currency | null> {
-    // Implement your show method here
+  override async show(id: number): Promise<CurrencyCreate | null> {
+    return db.currency.findUnique({
+      where: { id },
+    });
   }
 
-  async store(currency: Omit<Currency, "id">): Promise<Currency> {
-    // Implement your store method here
+  async store(currency: Omit<CurrencyCreate, "id">): Promise<CurrencyCreate> {
+    const {
+      name,
+      exchange_rate,
+      selling_rate,
+      buying_rate,
+      min_selling_rate,
+      max_buying_rate,
+      currency_symbol,
+    } = currency;
+    return db.currency.create({
+      data: {
+        name,
+        exchange_rate,
+        selling_rate,
+        buying_rate,
+        min_selling_rate,
+        max_buying_rate,
+        currency_symbol,
+      },
+    });
   }
 
-  async update(currency: Omit<Currency, "id">, id: number): Promise<Currency> {
-    // Implement your update method here
+  async update(currency: Omit<CurrencyUpdate, "id">, id: number): Promise<CurrencyUpdate> {
+    const {
+      name,
+      exchange_rate,
+      selling_rate,
+      buying_rate,
+      min_selling_rate,
+      max_buying_rate,
+      currency_symbol,
+    } = currency;
+    return db.currency.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        exchange_rate,
+        selling_rate,
+        buying_rate,
+        min_selling_rate,
+        max_buying_rate,
+        currency_symbol,
+      },
+    });
   }
 
   async delete(id: number): Promise<void> {
-    // Implement your delete method here
+    await db.currency.delete({
+      where: {
+        id,
+      },
+    });
   }
 }
 

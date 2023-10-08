@@ -70,7 +70,7 @@ model Account {
   currency           String?
   balance            Float?
   is_group           Boolean?  @default(false)
-  parent_account_id  Int?
+  // parent_account_id  Int?
   is_frozen          Boolean?  @default(false)
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
@@ -148,6 +148,6 @@ model SubAccount {
   updatedAt           DateTime @updatedAt
 
 
-  account Account @relation(fields: [account_id], references: [id])
+  account Account? @relation(fields: [account_id], references: [id])
   @@unique([account_name, account_id], name: "UniqueAccountNameAccountId")
 }

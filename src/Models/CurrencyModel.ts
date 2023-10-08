@@ -1,17 +1,14 @@
 import { body, ValidationChain } from "express-validator";
+import { Prisma } from ".prisma/client";
 
 /*==== Declare The Interface ===================================*/
 
-export type Currency = {
-  id: number;
-  name: string;
-  exchange_rate: number;
-  selling_rate: number;
-  buying_rate: number;
-  min_selling_rate: number;
-  max_buying_rate: number;
-  currency_symbol: string;
-};
+export type CurrencyCreate              = Prisma.CurrencyCreateInput
+export type CurrencyUncheckedCreate     = Prisma.CurrencyUncheckedCreateInput
+export type CurrencyUpdate              = Prisma.CurrencyUpdateInput
+export type CurrencyUncheckedUpdate     = Prisma.CurrencyUncheckedUpdateInput
+export type CurrencyUpdateManyMutation  = Prisma.CurrencyUpdateManyMutationInput
+export type CurrencyUncheckedUpdateMany = Prisma.CurrencyUncheckedUpdateManyInput
 
 /*==== Declare Your Requests Validations ===================================*/
 

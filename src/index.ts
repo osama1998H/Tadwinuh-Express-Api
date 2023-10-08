@@ -8,6 +8,14 @@ import cors from "cors";
 
 import UserController from "./Controllers/UserController";
 import CountryController from "./Controllers/CountryController";
+import CurrencyController from "./Controllers/CurrencyController";
+import NationalityController from "./Controllers/NationalityController";
+import ProvinceController from "./Controllers/ProvinceController";
+import DestinationController from "./Controllers/DestinationController";
+import AccountController from "./Controllers/AccountController";
+import SenderController from "./Controllers/SenderController";
+import RemittanceCommissionRateController from "./Controllers/RemittanceCommissionRateController";
+import SubAccountController from "./Controllers/SubAccountController";
 
 /*=============================================================*/
 /*==== Controller Imports End =================================*/
@@ -31,6 +39,14 @@ app.use(express.json());
 
 const userPaths = new UserController();
 const countryPaths = new CountryController();
+const currencyPaths = new CurrencyController();
+const nationalityPaths = new NationalityController();
+const provincePaths = new ProvinceController();
+const destinationPaths = new DestinationController();
+const accountPaths = new AccountController();
+const senderPaths = new SenderController();
+const remittanceCommissionRatePaths = new RemittanceCommissionRateController();
+const subAccountPaths = new SubAccountController();
 
 /*=============================================================*/
 /*==== Controller Instance End ================================*/
@@ -42,7 +58,17 @@ const countryPaths = new CountryController();
 
 app.use("/api/users/", userPaths.router);
 app.use("/api/countries/", countryPaths.router);
-
+app.use("/api/currencies/", currencyPaths.router);
+app.use("/api/nationalities/", nationalityPaths.router);
+app.use("/api/provinces/", provincePaths.router);
+app.use("/api/destinations/", destinationPaths.router);
+app.use("/api/accounts/", accountPaths.router);
+app.use("/api/senders/", senderPaths.router);
+app.use(
+  "/api/remittance-commission-rates/",
+  remittanceCommissionRatePaths.router
+);
+app.use("/api/sub-accounts/", subAccountPaths.router);
 
 /*=============================================================*/
 /*==== Routes Endpoints End ===================================*/

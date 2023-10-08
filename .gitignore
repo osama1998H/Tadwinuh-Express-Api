@@ -108,6 +108,3 @@ dist
 # Local configs
 jest.config.js
 ts.config.json
-
-# test files
-tests/

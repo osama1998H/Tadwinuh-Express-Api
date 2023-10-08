@@ -273,12 +273,12 @@ class BaseController {
    * Sets the response status code to the given status code, and returns a JSON response
    * containing the given error message.
    *
-   * @private
+   * @protected
    * @param {Response} res - The response object.
    * @param {number} statusCode - The HTTP status code to set on the response.
    * @param {any} error - The error object containing the error message.
    */
-  private handleError(res: Response, statusCode: number, error: any): void {
+  protected handleError(res: Response, statusCode: number, error: any): void {
     res.status(statusCode).json(error.message);
   }
 
@@ -288,11 +288,11 @@ class BaseController {
    * Takes an async route handler function and returns a wrapped handler
    * that catches any errors and passes them to handleError().
    *
-   * @private
+   * @protected
    * @param {Function} fn - The async route handler function.
    * @returns {Function} The wrapped route handler.
    */
-  private handleAsync(
+  protected handleAsync(
     fn: (req: Request, res: Response) => Promise<void>
   ): (req: Request, res: Response) => void {
     return (req, res) => {
