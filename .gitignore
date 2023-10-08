@@ -103,3 +103,11 @@ dist
 # TernJS port file
 .tern-port
 *.db
+
+
+# Local configs
+jest.config.js
+ts.config.json
+
+# test files
+tests/

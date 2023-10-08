@@ -123,9 +123,9 @@ describe("delete", () => {{}});
         print(f"Generated {class_name}Model.ts")
 
     # Create the test file
-    with open(test_file_path, "w") as test_file:
-        test_file.write(test_content)
-        print(f"Generated {class_name.lower()}.test.ts")
+    # with open(test_file_path, "w") as test_file:
+    #     test_file.write(test_content)
+    #     print(f"Generated {class_name.lower()}.test.ts")
 
     print("Generation Completed")
 
