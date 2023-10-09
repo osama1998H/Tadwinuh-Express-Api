@@ -82,10 +82,59 @@ class SubAccountController extends BaseController {
    * @param {Omit<SubAccountCreate, 'id'>} StoreDataObject_sub_account - The sub_account data without an ID.
    * @returns {Promise<SubAccountCreate>} A promise that resolves with the created sub_account.
    */
-  async store(
+  override async store(
     StoreDataObject_sub_account: Omit<SubAccountCreate, "id">
   ): Promise<SubAccountCreate> {
-    return db.subAccount.create({ data: StoreDataObject_sub_account });
+    const account = await this.getAccountBySubAccountType(
+      StoreDataObject_sub_account.type
+    );
+
+    if (!account) {
+      throw new Error(
+        `No parent account found for sub-account type: ${StoreDataObject_sub_account.type}`
+      );
+    }
+
+    return db.subAccount.create({
+      data: {
+        ...StoreDataObject_sub_account,
+        account: {
+          create: {
+            name: StoreDataObject_sub_account.account_name,
+            parent_account_name: account.name,
+          },
+        },
+      },
+    });
+  }
+
+  protected async getAccountBySubAccountType(subAccountType: string) {
+    let accountNumberToFind: number | null = null;
+
+    if (subAccountType === "Customer") {
+      accountNumberToFind = 1614;
+    } else if (subAccountType === "Banking Company") {
+      accountNumberToFind = 1615;
+    } else if (subAccountType === "Revenue Account") {
+      accountNumberToFind = 43;
+    } else if (subAccountType === "Expense Account") {
+      accountNumberToFind = 43;
+    } else if (subAccountType === "Bank Account") {
+      accountNumberToFind = 43;
+    }
+
+    if (accountNumberToFind !== null) {
+      return db.account.findUnique({
+        where: {
+          account_number: accountNumberToFind,
+        },
+        select: {
+          id: true,
+          name: true,
+        },
+      });
+    }
+    return null; // Return null if no account is found
   }
 
   /**

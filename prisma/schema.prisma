@@ -143,7 +143,7 @@ model SubAccount {
   id                  Int       @id @default(autoincrement())
   type                String
   account_name        String
-  account_id          Int       @unique
+  account_id          Int?       @unique
   mobile_number       String?
   email               String?
   address             String?
@@ -156,7 +156,7 @@ model SubAccount {
 
   account Account? @relation(fields: [account_id], references: [id])
 
-  @@unique([account_name, account_id], name: "UniqueAccountNameAccountId")
+  @@unique([account_name], name: "UniqueAccountNameAccountId")
 }
 
 model AccountingEntry {

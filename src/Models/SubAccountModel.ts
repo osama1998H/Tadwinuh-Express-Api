@@ -21,21 +21,21 @@ export const SubAccountStoreRequest: ValidationChain[] = [
   // Define your validation rules for store operation here
   body('type').isString().notEmpty(),
   body('account_name').isString().notEmpty(),
-  body('account_id').isInt(),
+  body('account_id').isInt().optional(),
   body('mobile_number').optional().isString(),
   body('email').optional().isString().isEmail(),
   body('address').optional().isString(),
   body('credit_limit').optional().isFloat(),
   body('note').optional().isString(),
   body('discount_percentage').optional().isFloat(),
-  body('is_frozen').isBoolean(),
-  body().custom((value: SubAccountCreate, { req }) => {
-    // Perform custom validation for related 'account' field if needed
-    if (!value.account) {
-      throw new Error('The account field is required.');
-    }
-    return true;
-  }),
+  body('is_frozen').isBoolean().optional(),
+  // body().custom((value: SubAccountCreate, { req }) => {
+  //   // Perform custom validation for related 'account' field if needed
+  //   if (!value.account) {
+  //     throw new Error('The account field is required.');
+  //   }
+  //   return true;
+  // }),
 ];
 
 export const SubAccountUpdateRequest: ValidationChain[] = [

@@ -70,8 +70,10 @@ class AccountController extends BaseController {
    * @param {number} id - The ID of the account to retrieve.
    * @returns {Promise<AccountCreate | null>} A promise that resolves with the account or null if not found.
    */
-  override async show(id: number): Promise<AccountCreate | null> {
-    return db.account.findUnique({ where: { id } });
+  override async show(id: number): Promise<any | null> {
+    return db.account.findUnique({ where: { id },include:{
+      childAccounts: true
+    }});
   }
 
   /**
