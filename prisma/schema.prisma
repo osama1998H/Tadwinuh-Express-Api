@@ -11,69 +11,69 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   firstName String
   lastName  String
-  email     String   @unique
+  email     String    @unique
   password  String // You should hash passwords and validate them separately
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Currency {
-  id               Int      @id @default(autoincrement())
-  name             String   @unique
-  exchange_rate    Float?   @default(1)
+  id               Int       @id @default(autoincrement())
+  name             String    @unique
+  exchange_rate    Float?    @default(1)
   selling_rate     Float?
   buying_rate      Float?
   min_selling_rate Float?
   max_buying_rate  Float?
   currency_symbol  String
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime? @updatedAt
 }
 
 model Country {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
   flag      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Nationality {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Province {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Destination {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
 model Account {
   id                      Int                    @id @default(autoincrement())
   type                    String?
   name                    String                 @unique
-  account_number          Int?                    @unique
+  account_number          Int?                   @unique
   currency                String?
   balance                 Float?
   is_group                Boolean?               @default(false)
   parent_account_name     String?
   is_frozen               Boolean?               @default(false)
   createdAt               DateTime               @default(now())
-  updatedAt               DateTime               @updatedAt
+  updatedAt               DateTime?              @updatedAt
   parentAccount           Account?               @relation("ChildAccounts", fields: [parent_account_name], references: [name])
   childAccounts           Account[]              @relation("ChildAccounts")
   sub_accounts            SubAccount[]
@@ -99,7 +99,7 @@ model Sender {
   city          String?
   province      String?
   createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  updatedAt     DateTime? @updatedAt
 }
 
 model GlEntry {
@@ -119,7 +119,7 @@ model GlEntry {
   is_opening                        Boolean   @default(false)
   is_cancelled                      Boolean   @default(false)
   createdAt                         DateTime  @default(now())
-  updatedAt                         DateTime  @updatedAt
+  updatedAt                         DateTime? @updatedAt
 }
 
 model RemittanceCommissionRate {
@@ -134,25 +134,25 @@ model RemittanceCommissionRate {
   incoming_commission_on_every   Float     @default(0)
   incoming_commission_amount     Float     @default(0)
   createdAt                      DateTime  @default(now())
-  updatedAt                      DateTime  @updatedAt
+  updatedAt                      DateTime? @updatedAt
 
   @@unique([customer_name, currency], name: "UniqueCustomerCurrency")
 }
 
 model SubAccount {
-  id                  Int      @id @default(autoincrement())
+  id                  Int       @id @default(autoincrement())
   type                String
   account_name        String
-  account_id          Int      @unique
+  account_id          Int       @unique
   mobile_number       String?
   email               String?
   address             String?
   credit_limit        Float?
   note                String?
   discount_percentage Float?
-  is_frozen           Boolean  @default(false)
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  is_frozen           Boolean   @default(false)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime? @updatedAt
 
   account Account? @relation(fields: [account_id], references: [id])
 
@@ -160,15 +160,15 @@ model SubAccount {
 }
 
 model AccountingEntry {
-  id              Int      @id @default(autoincrement())
+  id              Int       @id @default(autoincrement())
   posting_date    DateTime
   from_account_id Int // Foreign key to represent the source account
   to_account_id   Int // Foreign key to represent the destination account
   currency        String
   written_amount  String
   remarks         String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime? @updatedAt
 
   // Define foreign keys for the source and destination accounts
   from_account Account @relation("AccountingEntryFromAccount", fields: [from_account_id], references: [id])
@@ -176,7 +176,7 @@ model AccountingEntry {
 }
 
 model SellBuyCurrency {
-  id                              Int      @id @default(autoincrement())
+  id                              Int       @id @default(autoincrement())
   document_type                   String
   account_id                      Int // Foreign key to represent the account
   posting_date                    DateTime
@@ -187,8 +187,8 @@ model SellBuyCurrency {
   amount_company_currency         Float
   written_amount_company_currency String
   remarks                         String
-  createdAt                       DateTime @default(now())
-  updatedAt                       DateTime @updatedAt
+  createdAt                       DateTime  @default(now())
+  updatedAt                       DateTime? @updatedAt
 
   // Define a foreign key for the associated account
   account Account @relation(fields: [account_id], references: [id])
@@ -203,7 +203,7 @@ model QuickSellBuyCurrency {
   currency             String
   quick_sell_buy_table QuickSellBuyTable[]
   createdAt            DateTime            @default(now())
-  updatedAt            DateTime            @updatedAt
+  updatedAt            DateTime?           @updatedAt
 }
 
 model QuickSellBuyTable {
@@ -214,10 +214,12 @@ model QuickSellBuyTable {
   amount_company_currency   Float
   quick_sel_buy_currency    QuickSellBuyCurrency @relation(fields: [quick_sel_buy_currency_id], references: [id])
   quick_sel_buy_currency_id Int
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime?            @updatedAt
 }
 
 model CurrencySwap {
-  id                      Int      @id @default(autoincrement())
+  id                      Int       @id @default(autoincrement())
   posting_date            DateTime
   from_currency           String
   from_account_id         Int // Foreign key to represent the source account
@@ -230,8 +232,8 @@ model CurrencySwap {
   to_exchange_rate        Float
   written_amount          String
   remarks                 String
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime? @updatedAt
 
   // Define foreign keys for the source and destination accounts
   from_account Account @relation("CurrencySwapFromAccount", fields: [from_account_id], references: [id])
