@@ -20,8 +20,8 @@ export type AccountUncheckedUpdateMany = Prisma.AccountUncheckedUpdateManyInput
 export const AccountStoreRequest: ValidationChain[] = [
   // Define your validation rules for store operation here
   body('type').optional().isString().notEmpty(),
-  body('name').optional().isString().notEmpty(),
-  body('account_number').isInt(),
+  body('name').isString().notEmpty(),
+  body('account_number').isInt().optional(),
   body('currency').optional().isString(),
   body('balance').optional().isFloat(),
   body('is_group').optional().isBoolean(),

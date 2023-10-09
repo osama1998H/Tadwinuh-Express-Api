@@ -1,0 +1,289 @@
+[
+    {
+        "id": 1,
+        "name": "الموجودات",
+        "parent_id": null,
+        "account_number": 1,
+        "root_type": "Asset"
+    },
+    {
+        "id": 16,
+        "name": "مدينون",
+        "parent_id": 1,
+        "account_number": 16,
+        "root_type": "Asset"
+    },
+    {
+        "id": 161,
+        "name": "مدينون قطاع خاص دولار",
+        "parent_id": 16,
+        "account_number": 161,
+        "root_type": "Asset"
+    },
+    {
+        "id": 1611,
+        "name": "زبون ام هنا كاش",
+        "parent_id": 161,
+        "account_number": 1611,
+        "root_type": "Asset"
+    },
+    {
+        "id": 1612,
+        "name": "شركة الميار للصرافة",
+        "parent_id": 161,
+        "account_number": 1612,
+        "root_type": "Asset"
+    },
+    {
+        "id": 162,
+        "name": "مدينون قطاع خاص عراقي",
+        "parent_id": 16,
+        "account_number": 162,
+        "root_type": "Asset"
+    },
+    {
+        "id": 167,
+        "name": "السلف",
+        "parent_id": 1,
+        "account_number": 167,
+        "root_type": "Asset"
+    },
+    {
+        "id": 1671,
+        "name": "سلف الموظفين",
+        "parent_id": 167,
+        "account_number": 1671,
+        "root_type": "Asset"
+    },
+    {
+        "id": 18,
+        "name": "النقود",
+        "parent_id": null,
+        "account_number": 18,
+        "root_type": "Asset"
+    },
+    {
+        "id": 181,
+        "name": "صندوق",
+        "parent_id": 18,
+        "account_number": 181,
+        "root_type": "Asset"
+    },
+    {
+        "id": 1811,
+        "name": "صندوق الفرعي دولار",
+        "parent_id": 181,
+        "account_number": 1811,
+        "root_type": "Asset"
+    },
+    {
+        "id": 1812,
+        "name": "صندوق الفرعي دينار",
+        "parent_id": 181,
+        "account_number": 1812,
+        "root_type": "Asset"
+    },
+    {
+        "id": 182,
+        "name": "بنوك",
+        "parent_id": 18,
+        "account_number": 182,
+        "root_type": "Asset"
+    },
+    {
+        "id": 1821,
+        "name": "حساب بطاقة الدفع لدى البنك",
+        "parent_id": 182,
+        "account_number": 1821,
+        "root_type": "Asset"
+    },
+    {
+        "id": 2,
+        "name": "المطلوبات",
+        "parent_id": null,
+        "account_number": 2,
+        "root_type": "Liability"
+    },
+    {
+        "id": 21,
+        "name": "راس المال",
+        "parent_id": 2,
+        "account_number": 21,
+        "root_type": "Liability"
+    },
+    {
+        "id": 26,
+        "name": "دائنون",
+        "parent_id": 2,
+        "account_number": 26,
+        "root_type": "Liability"
+    },
+    {
+        "id": 28,
+        "name": "العمليات الجارية",
+        "parent_id": 2,
+        "account_number": 28,
+        "root_type": "Liability"
+    },
+    {
+        "id": 281,
+        "name": "حساب النشاط الجاري",
+        "parent_id": 28,
+        "account_number": 281,
+        "root_type": "Liability"
+    },
+    {
+        "id": 4,
+        "name": "الموارد",
+        "parent_id": null,
+        "account_number": 4,
+        "root_type": "Income"
+    },
+    {
+        "id": 42,
+        "name": "ايراد النشاط الجاري",
+        "parent_id": 4,
+        "account_number": 42,
+        "root_type": "Income"
+    },
+    {
+        "id": 421,
+        "name": "ايرادات المبيعات ( خدمة )",
+        "parent_id": 42,
+        "account_number": 421,
+        "root_type": "Income"
+    },
+    {
+        "id": 422,
+        "name": "ايرادات الحجوزات ( خدمة )",
+        "parent_id": 42,
+        "account_number": 422,
+        "root_type": "Income"
+    },
+    {
+        "id": 423,
+        "name": "عمولة اصدار السفاتج واعتماد الشيكات",
+        "parent_id": 421,
+        "account_number": 423,
+        "root_type": "Income"
+    },
+    {
+        "id": 424,
+        "name": "عمولة حوالة من الزبون",
+        "parent_id": 421,
+        "account_number": 424,
+        "root_type": "Income"
+    },
+    {
+        "id": 463,
+        "name": "ايرادات بيع وشراء العملات الاجنبية",
+        "parent_id": 421,
+        "account_number": 463,
+        "root_type": "Income"
+    },
+    {
+        "id": 3,
+        "name": "الاستخدامات",
+        "parent_id": null,
+        "account_number": 3,
+        "root_type": "Expense"
+    },
+    {
+        "id": 36,
+        "name": "الفوائد",
+        "parent_id": 3,
+        "account_number": 36,
+        "root_type": "Expense"
+    },
+    {
+        "id": 361,
+        "name": "فوائد الودائع الثابتة",
+        "parent_id": 36,
+        "account_number": 361,
+        "root_type": "Expense"
+    },
+    {
+        "id": 33,
+        "name": "المستلزمات الخدمية",
+        "parent_id": 3,
+        "account_number": 33,
+        "root_type": "Expense"
+    },
+    {
+        "id": 3366,
+        "name": "عمولة حوالة للشركة",
+        "parent_id": 33,
+        "account_number": 3366,
+        "root_type": "Expense"
+    },
+    {
+        "id": 38,
+        "name": "مصروفات تحويلية",
+        "parent_id": 3,
+        "account_number": 38,
+        "root_type": "Expense"
+    },
+    {
+        "id": 3836,
+        "name": "فروقات ارتفاع وانخفاض عملة",
+        "parent_id": 38,
+        "account_number": 3836,
+        "root_type": "Expense"
+    },
+    {
+        "id": 4515,
+        "name": "الخصم النقدي للمبيعات",
+        "parent_id": 3,
+        "account_number": 4515,
+        "root_type": "Expense"
+    },
+    {
+        "id": 31,
+        "name": "الرواتب والاجور",
+        "parent_id": 3,
+        "account_number": 31,
+        "root_type": "Expense"
+    },
+    {
+        "id": 311,
+        "name": "الرواتب النقدية للموظفين",
+        "parent_id": 31,
+        "account_number": 311,
+        "root_type": "Expense"
+    },
+    {
+        "id": 3111,
+        "name": "رواتب",
+        "parent_id": 311,
+        "account_number": 3111,
+        "root_type": "Expense"
+    },
+    {
+        "id": 3113,
+        "name": "رواتب ادارية",
+        "parent_id": 311,
+        "account_number": 3113,
+        "root_type": "Expense"
+    },
+    {
+        "id": 313,
+        "name": "مكافئات تشجيعية",
+        "parent_id": 31,
+        "account_number": 313,
+        "root_type": "Expense"
+    },
+    {
+        "id": 335,
+        "name": "اسئجار موجودات ثابتة",
+        "parent_id": 33,
+        "account_number": 335,
+        "root_type": "Expense"
+    },
+    {
+        "id": 3351,
+        "name": "ايجار مكتب الشركة",
+        "parent_id": 335,
+        "account_number": 3351,
+        "root_type": "Expense"
+    }
+]

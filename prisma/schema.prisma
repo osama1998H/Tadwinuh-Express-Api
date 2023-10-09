@@ -23,7 +23,7 @@ model User {
 model Currency {
   id               Int      @id @default(autoincrement())
   name             String   @unique
-  exchange_rate    Float? @default(1)
+  exchange_rate    Float?   @default(1)
   selling_rate     Float?
   buying_rate      Float?
   min_selling_rate Float?
@@ -63,19 +63,26 @@ model Destination {
 }
 
 model Account {
-  id                 Int       @id @default(autoincrement())
-  type               String?
-  name               String?
-  account_number     Int       @unique
-  currency           String?
-  balance            Float?
-  is_group           Boolean?  @default(false)
-  // parent_account_id  Int?
-  is_frozen          Boolean?  @default(false)
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  // parentAccount      Account?  @relation("ChildAccounts", fields: [parent_account_id], references: [id])
-  sub_accounts       SubAccount[]
+  id                      Int                    @id @default(autoincrement())
+  type                    String?
+  name                    String                 @unique
+  account_number          Int?                    @unique
+  currency                String?
+  balance                 Float?
+  is_group                Boolean?               @default(false)
+  parent_account_name     String?
+  is_frozen               Boolean?               @default(false)
+  createdAt               DateTime               @default(now())
+  updatedAt               DateTime               @updatedAt
+  parentAccount           Account?               @relation("ChildAccounts", fields: [parent_account_name], references: [name])
+  childAccounts           Account[]              @relation("ChildAccounts")
+  sub_accounts            SubAccount[]
+  accounting_entry_from   AccountingEntry[]      @relation("AccountingEntryFromAccount")
+  accounting_entry_to     AccountingEntry[]      @relation("AccountingEntryToAccount")
+  sell_buy_currency       SellBuyCurrency[]
+  quick_sell_buy_currency QuickSellBuyCurrency[]
+  currency_swap_from      CurrencySwap[]         @relation("CurrencySwapFromAccount")
+  currency_swap_to        CurrencySwap[]         @relation("CurrencySwapToAccount")
 }
 
 model Sender {
@@ -101,11 +108,11 @@ model GlEntry {
   transaction_date                  DateTime?
   due_date                          DateTime?
   account                           String
-  debit_amount                      Float   @default(0)
-  credit_amount                     Float   @default(0)
+  debit_amount                      Float     @default(0)
+  credit_amount                     Float     @default(0)
   account_currency                  String
-  debit_amount_in_account_currency  Float   @default(0)
-  credit_amount_in_account_currency Float   @default(0)
+  debit_amount_in_account_currency  Float     @default(0)
+  credit_amount_in_account_currency Float     @default(0)
   voucher_type                      String?
   voucher_number                    String?
   remarks                           String?
@@ -120,12 +127,12 @@ model RemittanceCommissionRate {
   posting_date                   DateTime? @default(now())
   customer_name                  String
   currency                       String
-  outgoing_commission_percentage Float   @default(0)
-  outgoing_commission_on_every   Float   @default(0)
-  outgoing_commission_amount     Float   @default(0)
-  incoming_commission_percentage Float   @default(0)
-  incoming_commission_on_every   Float   @default(0)
-  incoming_commission_amount     Float   @default(0)
+  outgoing_commission_percentage Float     @default(0)
+  outgoing_commission_on_every   Float     @default(0)
+  outgoing_commission_amount     Float     @default(0)
+  incoming_commission_percentage Float     @default(0)
+  incoming_commission_on_every   Float     @default(0)
+  incoming_commission_amount     Float     @default(0)
   createdAt                      DateTime  @default(now())
   updatedAt                      DateTime  @updatedAt
 
@@ -136,7 +143,7 @@ model SubAccount {
   id                  Int      @id @default(autoincrement())
   type                String
   account_name        String
-  account_id          Int @unique
+  account_id          Int      @unique
   mobile_number       String?
   email               String?
   address             String?
@@ -147,7 +154,86 @@ model SubAccount {
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
 
-
   account Account? @relation(fields: [account_id], references: [id])
+
   @@unique([account_name, account_id], name: "UniqueAccountNameAccountId")
+}
+
+model AccountingEntry {
+  id              Int      @id @default(autoincrement())
+  posting_date    DateTime
+  from_account_id Int // Foreign key to represent the source account
+  to_account_id   Int // Foreign key to represent the destination account
+  currency        String
+  written_amount  String
+  remarks         String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Define foreign keys for the source and destination accounts
+  from_account Account @relation("AccountingEntryFromAccount", fields: [from_account_id], references: [id])
+  to_account   Account @relation("AccountingEntryToAccount", fields: [to_account_id], references: [id])
+}
+
+model SellBuyCurrency {
+  id                              Int      @id @default(autoincrement())
+  document_type                   String
+  account_id                      Int // Foreign key to represent the account
+  posting_date                    DateTime
+  currency                        String
+  exchange_rate                   Float
+  amount                          Float
+  written_amount                  String
+  amount_company_currency         Float
+  written_amount_company_currency String
+  remarks                         String
+  createdAt                       DateTime @default(now())
+  updatedAt                       DateTime @updatedAt
+
+  // Define a foreign key for the associated account
+  account Account @relation(fields: [account_id], references: [id])
+}
+
+model QuickSellBuyCurrency {
+  id                   Int                 @id @default(autoincrement())
+  document_type        String
+  account_id           Int
+  account              Account             @relation(fields: [account_id], references: [id])
+  posting_date         DateTime
+  currency             String
+  quick_sell_buy_table QuickSellBuyTable[]
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+}
+
+model QuickSellBuyTable {
+  id                        Int                  @id @default(autoincrement())
+  amount                    Float
+  exchange_rate             Float
+  remarks                   String
+  amount_company_currency   Float
+  quick_sel_buy_currency    QuickSellBuyCurrency @relation(fields: [quick_sel_buy_currency_id], references: [id])
+  quick_sel_buy_currency_id Int
+}
+
+model CurrencySwap {
+  id                      Int      @id @default(autoincrement())
+  posting_date            DateTime
+  from_currency           String
+  from_account_id         Int // Foreign key to represent the source account
+  from_account_number     String
+  from_exchange_rate      Float
+  amount_company_currency Float
+  to_currency             String
+  to_account_id           Int // Foreign key to represent the destination account
+  to_account_number       String
+  to_exchange_rate        Float
+  written_amount          String
+  remarks                 String
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  // Define foreign keys for the source and destination accounts
+  from_account Account @relation("CurrencySwapFromAccount", fields: [from_account_id], references: [id])
+  to_account   Account @relation("CurrencySwapToAccount", fields: [to_account_id], references: [id])
 }

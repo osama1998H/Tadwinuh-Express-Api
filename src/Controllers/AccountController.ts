@@ -55,7 +55,7 @@ class AccountController extends BaseController {
    * Overrides the index method to retrieve all Accounts from the database.
    *
    * @override
-   * @returns {Promise<AccountCreate[]>} A promise that resolves with an array of countries.
+   * @returns {Promise<AccountCreate[]>} A promise that resolves with an array of Accounts.
    */
   override async index(): Promise<AccountCreate[]> {
     return db.account.findMany();
@@ -84,25 +84,8 @@ class AccountController extends BaseController {
   async store(
     StoreDataObject_account: Omit<AccountCreate, "id">
   ): Promise<AccountCreate> {
-    const {
-      type,
-      name,
-      account_number,
-      currency,
-      balance,
-      is_group,
-      is_frozen,
-    } = StoreDataObject_account;
     return db.account.create({
-      data: {
-        name,
-        type,
-        account_number,
-        currency,
-        balance,
-        is_group,
-        is_frozen,
-      },
+      data: StoreDataObject_account,
     });
   }
 
@@ -118,26 +101,9 @@ class AccountController extends BaseController {
     UpdateDataObject_account: Omit<AccountUpdate, "id">,
     id: number
   ): Promise<AccountUpdate> {
-    const {
-      type,
-      name,
-      account_number,
-      currency,
-      balance,
-      is_group,
-      is_frozen,
-    } = UpdateDataObject_account;
     return db.account.update({
       where: { id },
-      data: {
-        name,
-        type,
-        account_number,
-        currency,
-        balance,
-        is_group,
-        is_frozen,
-      },
+      data: UpdateDataObject_account,
     });
   }
 

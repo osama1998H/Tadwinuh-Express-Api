@@ -1,5 +1,7 @@
 import { Request, Response, Router } from "express";
 import { validationResult, ValidationChain } from "express-validator";
+import { ParsedQs } from 'qs';
+
 
 class BaseController {
   modelName: string;
@@ -108,7 +110,6 @@ class BaseController {
    */
   async baseShow(req: Request, res: Response): Promise<any> {
     const id: number = parseInt(req.params.id, 10);
-
     try {
       const item = await this.show(id);
 
