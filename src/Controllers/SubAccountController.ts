@@ -95,6 +95,10 @@ class SubAccountController extends BaseController {
       );
     }
 
+    if (StoreDataObject_sub_account.account) {
+      
+    }
+
     return db.subAccount.create({
       data: {
         ...StoreDataObject_sub_account,
@@ -114,13 +118,13 @@ class SubAccountController extends BaseController {
     if (subAccountType === "Customer") {
       accountNumberToFind = 1614;
     } else if (subAccountType === "Banking Company") {
-      accountNumberToFind = 1615;
+      accountNumberToFind = 1612;
     } else if (subAccountType === "Revenue Account") {
-      accountNumberToFind = 43;
+      accountNumberToFind = 42;
     } else if (subAccountType === "Expense Account") {
-      accountNumberToFind = 43;
+      accountNumberToFind = 43; // Must Selected By The User
     } else if (subAccountType === "Bank Account") {
-      accountNumberToFind = 43;
+      accountNumberToFind = 183;
     }
 
     if (accountNumberToFind !== null) {

@@ -12,4 +12,14 @@ if (!global.__db) {
 
 db = global.__db;
 
+
+export function log(message: string, data?: any) {
+  console.log(`[LOG] ${message}`);
+  if (data) {
+      console.log(data);
+  }
+}
+
+
+
 export { db };

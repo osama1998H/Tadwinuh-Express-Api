@@ -29,6 +29,13 @@ async function seed() {
   await createUserData();
   await createCurrencyData();
   await createAccountsData();
+  await db.settings.create({
+    data:{
+      name: "Company Currency",
+      type: "String",
+      value: "IQD"
+    }
+  })
 }
 
 seed();
@@ -93,7 +100,7 @@ async function createAccountsData() {
           counter++;
 
           resolve();
-        }, 500); // Wait for 1 second (1000 milliseconds) before inserting the next account
+        }, 200); // Wait for 1 second (1000 milliseconds) before inserting the next account
       });
     } else {
       console.log(`Skipped account with duplicate name: ${account.name}`);

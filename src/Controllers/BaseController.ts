@@ -1,7 +1,6 @@
-import { Request, Response, Router } from "express";
+import { Request, Response, Router, NextFunction } from "express";
 import { validationResult, ValidationChain } from "express-validator";
-import { ParsedQs } from 'qs';
-
+import { ParsedQs } from "qs";
 
 class BaseController {
   modelName: string;
@@ -13,6 +12,29 @@ class BaseController {
     this.setupRoutes();
   }
 
+  logRequest(req: Request, res: Response, next: NextFunction) {
+    console.log(`[${new Date().toISOString()}] ${req.method} to ${req.path}`);
+    next();
+  }
+
+  logError(err: any, req: Request, res: Response, next: NextFunction) {
+    console.error(
+      `[${new Date().toISOString()}] Error encountered: ${err.message}`
+    );
+    next(err);
+  }
+
+  logResponse(req: Request, res: Response, next: NextFunction) {
+    res.on("finish", () => {
+      console.log(
+        `[${new Date().toISOString()}] ${res.statusCode} ${
+          res.statusMessage
+        }; ${res.get("Content-Length") || 0}b sent`
+      );
+    });
+    next();
+  }
+
   /**
    * Sets up the routes for the controller.
    *
@@ -20,6 +42,9 @@ class BaseController {
    * Uses handleAsync() wrapper for async route handlers.
    */
   setupRoutes() {
+    this.router.use(this.logRequest);
+    this.router.use(this.logResponse);
+
     /**
      * GET / route handler.
      */
@@ -54,6 +79,8 @@ class BaseController {
      * DELETE /:id route handler.
      */
     this.router.delete("/:id", this.handleAsync(this.baseDelete.bind(this)));
+
+    this.router.use(this.logError);
   }
 
   validateStoreRequest(): ValidationChain[] {

@@ -77,7 +77,7 @@ class {class_name}Controller extends BaseController {{
   * Overrides the index method to retrieve all {blob.words.pluralize()} from the database.
   *
   * @override
-  * @returns {{Promise<{class_name}Create[]>}} A promise that resolves with an array of countries.
+  * @returns {{Promise<{class_name}Create[]>}} A promise that resolves with an array of {blob.words.pluralize()}.
   */
   override async index(): Promise<{class_name}Create[]> {{
     // Implement your index method here

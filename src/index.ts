@@ -16,6 +16,8 @@ import AccountController from "./Controllers/AccountController";
 import SenderController from "./Controllers/SenderController";
 import RemittanceCommissionRateController from "./Controllers/RemittanceCommissionRateController";
 import SubAccountController from "./Controllers/SubAccountController";
+import AccountingEntryController from "./Controllers/AccountingEntryController";
+import SellBuyCurrencyController from "./Controllers/SellBuyCurrencyController";
 
 /*=============================================================*/
 /*==== Controller Imports End =================================*/
@@ -47,6 +49,9 @@ const accountPaths = new AccountController();
 const senderPaths = new SenderController();
 const remittanceCommissionRatePaths = new RemittanceCommissionRateController();
 const subAccountPaths = new SubAccountController();
+const accountingEntryPaths = new AccountingEntryController();
+const sellBuyPaths = new SellBuyCurrencyController();
+
 
 /*=============================================================*/
 /*==== Controller Instance End ================================*/
@@ -69,6 +74,10 @@ app.use(
   remittanceCommissionRatePaths.router
 );
 app.use("/api/sub-accounts/", subAccountPaths.router);
+app.use("/api/accounting-entries/", accountingEntryPaths.router);
+app.use("/api/sell-buy-currencies/", sellBuyPaths.router);
+
+
 
 /*=============================================================*/
 /*==== Routes Endpoints End ===================================*/

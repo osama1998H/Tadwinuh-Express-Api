@@ -1,6 +1,6 @@
 import BaseController from "./BaseController";
 import { ValidationChain } from "express-validator";
-import { db } from "../utils/db.server";
+import { db, log } from "../utils/db.server";
 import {
   AccountCreate,
   AccountUpdate,
@@ -48,7 +48,6 @@ class AccountController extends BaseController {
   validateUpdateRequest(): ValidationChain[] {
     return AccountUpdateRequest;
   }
-
   /**
    * Gets all Accounts.
    *
@@ -58,6 +57,7 @@ class AccountController extends BaseController {
    * @returns {Promise<AccountCreate[]>} A promise that resolves with an array of Accounts.
    */
   override async index(): Promise<AccountCreate[]> {
+    log("Get All Accounts From The DB")
     return db.account.findMany();
   }
 

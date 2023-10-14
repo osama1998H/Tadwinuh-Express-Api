@@ -2,6 +2,9 @@ import BaseController from "./BaseController";
 import { User, UserStoreRequest, UserUpdateRequest } from "../Models/UserModel";
 import { db } from "../utils/db.server";
 import { body, ValidationChain } from "express-validator";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient()
+
 
 class UserController extends BaseController {
   constructor() {
@@ -34,7 +37,7 @@ class UserController extends BaseController {
    *
    ************************************************************/
 
-  override async index(): Promise<User[]> {
+  override async index(): Promise<any> {
     return db.user.findMany();
   }
 
