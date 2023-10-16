@@ -101,10 +101,10 @@ class {class_name}Controller extends BaseController {{
    *
    * Accepts a {snake_case_name} without an ID and creates a new {snake_case_name} record in the database.
    *
-   * @param {{Omit<{class_name}Create, 'id'>}} StoreDataObject_{snake_case_name} - The {snake_case_name} data without an ID.
+   * @param {{Omit<{class_name}Create, 'id'>}} storeDataObject - The {snake_case_name} data without an ID.
    * @returns {{Promise<{class_name}Create>}} A promise that resolves with the created {snake_case_name}.
    */
-  async store(StoreDataObject_{snake_case_name}: Omit<{class_name}Create, "id">): Promise<{class_name}Create> {{
+  async store(storeDataObject: Omit<{class_name}Create, "id">): Promise<{class_name}Create> {{
     // Implement your store method here
   }}
 
@@ -113,11 +113,11 @@ class {class_name}Controller extends BaseController {{
    *
    * Accepts a {snake_case_name} without an ID and updates the {snake_case_name} with the given ID in the database.
    *
-   * @param {{Omit<{class_name}Update, 'id'>}} UpdateDataObject_{snake_case_name} - The {snake_case_name} data without an ID.
+   * @param {{Omit<{class_name}Update, 'id'>}} updateDataObject - The {snake_case_name} data without an ID.
    * @param {{number}} id - The ID of the {snake_case_name} to update.
    * @returns {{Promise<{class_name}Update>}} A promise that resolves with the updated {snake_case_name}.
    */
-  async update(UpdateDataObject_{snake_case_name}: Omit<{class_name}Update, "id">, id: number): Promise<{class_name}Update> {{
+  async update(updateDataObject: Omit<{class_name}Update, "id">, id: number): Promise<{class_name}Update> {{
     // Implement your update method here
   }}
 

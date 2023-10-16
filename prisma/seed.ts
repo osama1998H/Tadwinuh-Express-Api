@@ -2502,8 +2502,8 @@ function getCurrencies(): Array<Currency> {
     {
       name: "USD",
       exchange_rate: 1.2,
-      selling_rate: null,
-      buying_rate: null,
+      selling_rate: 1.2,
+      buying_rate: 1.1,
       min_selling_rate: null,
       max_buying_rate: null,
       currency_symbol: "$",
